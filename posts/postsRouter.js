@@ -50,7 +50,8 @@ function validatePost (req, res, next) {
         })
 }
 
-//routes / endpoints
+// routes and  GET end points
+
 router.get('/', (req, res) => {
     postsDb.get(req.body)
         .then(posts => {
@@ -60,6 +61,8 @@ router.get('/', (req, res) => {
             res.status(500).json({error: 'Could not retrieve posts', error: err})
         });
 });
+
+//routes and GET by ID end point
 
 router.get('/:id', (req, res) => {
     postsDb.get(req.params.id)
@@ -71,6 +74,8 @@ router.get('/:id', (req, res) => {
     })
 });
 
+// POST end point and implement uppercase check middleware
+
 router.post('/', validateBody, validateUser, (req, res) => {
     postsDb.insert(req.body)
         .then(result => {
@@ -81,6 +86,7 @@ router.post('/', validateBody, validateUser, (req, res) => {
         })
 });
 
+//  PUT end point and implement uppercase check middleware
 router.put('/:id', validateBody, validateUser, validatePost, (req,res) => {
     postsDb.update(req.params.id,req.body)
         .then(count => {
@@ -91,14 +97,20 @@ router.put('/:id', validateBody, validateUser, validatePost, (req,res) => {
         })
 })
 
+
+// DELETE routes end points
+
+
 router.delete('/:id', validatePost, (req, res) => {
     postsDb.remove(req.params.id)
         .then(count => {
             res.status(200).json({message: `Post ID: ${req.params.id} successfully deleted`})
         })
         .catch(err => { 
-            res.status(500).json({message: 'could not remove post', error: err});
+            res.status(500).json({message: 'Could not delete post', error: err});
         })
 });
+
+// don't forget to export modules
 
 module.exports = router;
