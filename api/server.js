@@ -2,7 +2,7 @@
 
 const express =require('express');
 const helmet =require('helmet');
-//const morgan =require('morgan');
+const morgan =require('morgan');
 const cors =require('cors');
 
 //build out server by assigning express to a variable
@@ -18,7 +18,7 @@ const postsRouter =require('../posts/postsRouter.js');
 
 server.use(express.json()); //tells server how to parse json
 server.use(helmet()); // Security - protect your app from some well-known web vulnerabilities by setting HTTP headers 
-//server.use(morgan()); // auto-generates logs on all HTTP requests
+server.use(morgan()); // auto-generates logs on all HTTP requests
 server.use(cors()); // Cross-Origin Resource Sharing - allows cross domain communication from the browser
 
 // routes!
